@@ -19,7 +19,7 @@ ext {
             name = name.substring(1);
         }
 
-        return "com.github.MindustryExtended13.Me13Core:$name:533faaf615"
+        return "com.github.MindustryExtended13.Me13Core:$name:389ce0eb25"
     }
 }
 
@@ -111,10 +111,6 @@ dependencies {
     compileOnly 'org.jetbrains:annotations:23.0.0'
     annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
 
-    //core & integration (not optimal and core, integration module can be removed)
-    implementation project(":core")
-    implementation project(":integration")
-
     //ME13 components
     //to implement use "implementation modCore(':module')"
 }
@@ -165,7 +161,6 @@ jar{
 
     from(rootDir) {
         include "mod.json"
-        include "icon.png"
     }
 }
 
@@ -209,19 +204,3 @@ task zipJar(type: Jar) {
 
     dependsOn 'jar'
 }
-
-project(":core") {
-    dependencies {
-        annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
-        compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
-        compileOnly "com.github.Anuken.MindustryJitpack:core:$mindustryVersion"
-    }
-}
-
-//project(":integration") {
-//    dependencies {
-//        annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
-//        compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
-//        compileOnly "com.github.Anuken.MindustryJitpack:core:$mindustryVersion"
-//    }
-//}
