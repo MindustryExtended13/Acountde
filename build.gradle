@@ -112,7 +112,7 @@ dependencies {
     annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
 
     //ME13 components
-    //to implement use "implementation modCore(':module')"
+    implementation modCore(':logger')
 }
 
 //force arc version
