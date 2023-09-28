@@ -1,4 +1,4 @@
-package acountde.dimension.content;
+package acountde.world.dimensions;
 
 import acountde.dimension.Dimension;
 import acountde.dimension.Level;
@@ -23,6 +23,6 @@ public class TestDimension extends Dimension {
     }
 
     public TestDimension() {
-        super();
+        super("test");
     }
 }

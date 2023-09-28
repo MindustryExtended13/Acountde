@@ -1,5 +1,6 @@
 package acountde.dimension;
 
+import acountde.content.ACDimensions;
 import arc.math.geom.Point2;
 import arc.struct.ObjectMap;
 import mindustry.Vars;
@@ -9,7 +10,7 @@ import mindustry.world.Tiles;
 
 public class AcountdeServer {
     public ObjectMap<Dimension, Level> loaded = new ObjectMap<>();
-    public Dimension current = Dimension.OVERWORLD;
+    public Dimension current = ACDimensions.overworld;
 
     public void resetTeamData() {
         Vars.state.teams = new Teams();
@@ -19,6 +20,9 @@ public class AcountdeServer {
         getLevel(current).save(Vars.world);
         getLevel(to).move(Vars.world);
         Call.unitDespawn(Vars.player.unit());
+        if(!Vars.headless) {
+            Vars.control.input.config.hideConfig();
+        }
         current = to;
     }
 

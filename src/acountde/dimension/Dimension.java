@@ -1,14 +1,13 @@
 package acountde.dimension;
 
-import acountde.dimension.content.TestDimension;
+import arc.Core;
 import arc.math.geom.Point2;
 import arc.struct.Seq;
+import mindustry.Vars;
 
 public class Dimension {
     public static final Seq<Dimension> all = new Seq<>();
-
-    public static final Dimension OVERWORLD = new Dimension();
-    public static final TestDimension TEST = new TestDimension();
+    public String localizedName;
 
     public void generateLevel(Level level) {
     }
@@ -17,7 +16,8 @@ public class Dimension {
         return null;
     }
 
-    public Dimension() {
+    public Dimension(String name) {
+        localizedName = Core.bundle.get("dimension." + Vars.content.transformName(name));
         all.add(this);
     }
 }

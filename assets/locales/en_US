@@ -1,0 +1,19 @@
+--vardef B = acountde
+
+--cd prefixes.%B%-
+    developer = [purple] --- Developer content --- []&
+    campaign = [red] --- Campaign content --- []&
+    sandbox = [accent] --- Sandbox content --- []&
+--cde
+
+--cd dimension.%B%-
+    overworld = Overworld
+    test = Test dimension
+--cde
+
+--cd block.%B%-
+    --cd magic-cube.
+        name = Magic cube
+        description = Cube that allows to adventure between all avalible dimensions
+    --cde
+-cde

@@ -113,6 +113,7 @@ dependencies {
 
     //ME13 components
     implementation modCore(':logger')
+    implementation modCore(':bundle2')
 }
 
 //force arc version
