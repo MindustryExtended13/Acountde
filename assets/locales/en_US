@@ -1,5 +1,9 @@
 --vardef B = acountde
 
+--cd %B%.
+    you_in = You in:
+--cde
+
 --cd prefixes.%B%-
     developer = [purple] --- Developer content --- []&
     campaign = [red] --- Campaign content --- []&

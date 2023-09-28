@@ -1,6 +1,7 @@
 package acountde.dimension;
 
 import acountde.Acountde;
+import acountde.types.entity.ACDataUnitEntity;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.core.World;
@@ -58,9 +59,11 @@ public class Level {
 
     @Contract(value = "null -> false", pure = true)
     public static boolean needInclude(Entityc e) {
+        if(e instanceof ACDataUnitEntity) {
+            return false;
+        }
         return e instanceof PowerGraphUpdaterc || e instanceof WeatherState
                 || e instanceof Building || e instanceof Puddle
-                || e instanceof Bullet || e instanceof Unit
-                || e instanceof Fire;
+                || e instanceof Unit || e instanceof Fire;
     }
 }

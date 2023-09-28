@@ -12,6 +12,10 @@ public class ACRegistry {
         return all.select(o -> o instanceof Dimension).map(o -> (Dimension) o);
     }
 
+    public static Dimension dimension(String name) {
+        return dimensions().find(d -> d.name.equals(name));
+    }
+
     public static Seq<UnlockableContent> content() {
         return all.select(o -> o instanceof UnlockableContent).map(o -> (UnlockableContent) o);
     }

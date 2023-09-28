@@ -3,6 +3,8 @@ package acountde;
 import acountde.content.ACBlocks;
 import acountde.content.ACDimensions;
 import acountde.content.ACRegistry;
+import acountde.content.ACUnits;
+import acountde.data.ACData;
 import acountde.dimension.AcountdeServer;
 import acountde.world.blocks.mark.CampaignContent;
 import acountde.world.blocks.mark.DeveloperContent;
@@ -29,10 +31,26 @@ public class Acountde extends Mod {
         return Core.bundle.get("prefixes." + MOD_ID + "-" + name);
     }
 
+    public static String get(String name) {
+        return Core.bundle.get(MOD_ID + "." + name);
+    }
+
     public Acountde() {
         LOGGER.info("Loaded mod constructor");
 
+        Events.on(EventType.SaveLoadEvent.class, (e) -> {
+            if(!server.disableBetaConfiguration) {
+                server.restart();
+                server.read();
+            }
+        });
+
+        Events.on(EventType.SaveWriteEvent.class, (e) -> {
+            server.save();
+        });
+
         Events.on(EventType.ClientLoadEvent.class, (e) -> {
+            ACData.updateSaveDir();
             for(UnlockableContent c : ACRegistry.content()) {
                 if(c instanceof CampaignContent) {
                     c.description = getPrefix("campaign")  + c.description;
@@ -59,6 +77,7 @@ public class Acountde extends Mod {
         Bundle2.load(instance = Vars.mods.getMod(Acountde.class));
         LOGGER.info("Loading mod content");
 
+        ACUnits.load();
         ACBlocks.load();
         ACDimensions.load();
     }
