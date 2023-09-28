@@ -32,10 +32,6 @@ public class Acountde extends Mod {
     public Acountde() {
         LOGGER.info("Loaded mod constructor");
 
-        Events.on(EventType.SaveWriteEvent.class, (e) -> {
-            server.changeDimension(ACDimensions.overworld);
-        });
-
         Events.on(EventType.ClientLoadEvent.class, (e) -> {
             for(UnlockableContent c : ACRegistry.content()) {
                 if(c instanceof CampaignContent) {
