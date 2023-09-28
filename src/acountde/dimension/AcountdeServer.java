@@ -17,6 +17,7 @@ public class AcountdeServer {
     }
 
     public void changeDimension(Dimension to) {
+        if(to == current) return;
         getLevel(current).save(Vars.world);
         getLevel(to).move(Vars.world);
         Call.unitDespawn(Vars.player.unit());
