@@ -62,8 +62,6 @@ public class ACBlocks {
             supportsOverlay = true;
         }});
 
-        palmTree = register(new TreeBlock("palm-tree") {{
-            shadowOffset = -2f;
-        }});
+        palmTree = register(new TreeBlock("palm-tree"));
     }
 }
