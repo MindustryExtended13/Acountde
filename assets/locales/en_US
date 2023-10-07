@@ -4,10 +4,10 @@
     you_in = You in:
 --cde
 
---cd prefixes.%B%-
-    developer = [purple] --- Developer content --- []&
-    campaign = [red] --- Campaign content --- []&
-    sandbox = [accent] --- Sandbox content --- []&
+--cd prefixes.
+    developer = [purple] --- Developer content --- []
+    campaign = [red] --- Campaign content --- []
+    sandbox = [accent] --- Sandbox content --- []
 --cde
 
 --cd dimension.%B%-
