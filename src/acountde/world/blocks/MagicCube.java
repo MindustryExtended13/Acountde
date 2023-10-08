@@ -1,26 +1,21 @@
 package acountde.world.blocks;
 
 import acountde.Acountde;
-import acountde.anno.AddMark;
-import acountde.anno.MarkType;
 import acountde.content.ACRegistry;
 import acountde.dimension.Dimension;
 import acountde.ui.UIUtil;
 import arc.scene.ui.layout.Table;
-import mindustry.gen.Building;
-import mindustry.ui.Styles;
-import mindustry.world.Block;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("InnerClassMayBeStatic")
-public class MagicCube extends Block {
+@SuppressWarnings("all")
+public class MagicCube extends ACBlock {
     public MagicCube(String name) {
         super(name);
         destructible = true;
         configurable = true;
     }
 
-    public class MagicCubeBuild extends Building {
+    public class MagicCubeBuild extends ACBuild {
         @Override
         public void buildConfiguration(@NotNull Table table) {
             table.table(t -> {

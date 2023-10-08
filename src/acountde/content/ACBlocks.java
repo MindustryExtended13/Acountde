@@ -3,6 +3,9 @@ package acountde.content;
 import acountde.anno.AddMark;
 import acountde.anno.MarkType;
 import acountde.world.blocks.MagicCube;
+import acountde.world.blocks.corruption.CorruptionBlock;
+import acountde.world.blocks.corruption.ShadowVein;
+import acountde.world.blocks.corruption.ToxicTower;
 import mindustry.content.Liquids;
 import mindustry.content.StatusEffects;
 import mindustry.graphics.CacheLayer;
@@ -16,19 +19,29 @@ import mindustry.world.meta.BuildVisibility;
 import static acountde.content.ACRegistry.*;
 
 public class ACBlocks {
+    //region dimension
     @AddMark({MarkType.DEVELOPER, MarkType.SANDBOX})
     public static Block magicCube;
+    //end region
+
+    //region environment
     @AddMark(MarkType.DEVELOPER)
     public static Block testFloor, lightTestFloor, darkTestFloor,
             solidFloor, solidFloor1, solidFloor2, solidFloor3, solidFloor4;
-    public static Block deepEnzor, enzor, palmTree;
+    public static Block deepEnzor, enzor;
+    //end region
+
+    //region structures (blocks)
+    public static Block palmTree;
+    //end region
+
+    //region corruption
+    @AddMark(MarkType.CORRUPTION)
+    public static Block toxicTower, shadowVein;
+    //end region
 
     public static void load() {
-        magicCube = register(new MagicCube("magic-cube") {{
-            requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.empty);
-            size = 2;
-        }});
-
+        //region environment
         testFloor      = register(new Floor("test-floor",       0));
         lightTestFloor = register(new Floor("light-test-floor", 0));
         darkTestFloor  = register(new Floor("dark-test-floor",  0));
@@ -61,7 +74,30 @@ public class ACBlocks {
             albedo = 0.9f;
             supportsOverlay = true;
         }});
+        //end region
 
+        //region structures (blocks)
         palmTree = register(new TreeBlock("palm-tree"));
+        //end region
+
+        //region corruption
+        toxicTower = register(new ToxicTower("toxic-tower") {{
+            requirements(Category.turret, BuildVisibility.sandboxOnly, ItemStack.empty);
+            pulseInterval = 30;
+            size = 2;
+        }});
+
+        shadowVein = register(new ShadowVein("shadow-vein") {{
+            requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.empty);
+            pulseInterval = 15;
+        }});
+        //end region
+
+        //region dimension
+        magicCube = register(new MagicCube("magic-cube") {{
+            requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.empty);
+            size = 2;
+        }});
+        //end region
     }
 }

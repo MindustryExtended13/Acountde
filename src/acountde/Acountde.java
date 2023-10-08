@@ -107,6 +107,7 @@ public class Acountde extends Mod {
         Bundle2.load(instance = Vars.mods.getMod(Acountde.class));
         LOGGER.info("Loading mod content");
 
+        ACStatusEffects.load();
         ACUnits.load();
         ACBlocks.load();
         ACPlanets.load();

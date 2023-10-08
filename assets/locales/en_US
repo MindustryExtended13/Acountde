@@ -8,6 +8,7 @@
     developer = [purple] --- Developer content --- []
     campaign = [red] --- Campaign content --- []
     sandbox = [accent] --- Sandbox content --- []
+    corruption = [#403287] --- Corruption content --- []
 --cde
 
 --cd dimension.%B%-
@@ -16,8 +17,30 @@
 --cde
 
 --cd block.%B%-
+    //dimension
     --cd magic-cube.
         name = Magic cube
         description = Cube that allows to adventure between all avalible dimensions
     --cde
+
+    //corruption
+    --cd toxic-tower.
+        name = Toxic tower
+        description = A biological tower that uses acid to defense. First turret of corruption
+    --cde
+
+    //environment
+    deep-enzor.name = Deep enzor
+    shallow-enzor.name = Enzor
+    palm-tree.name = Palm
+
+    //developer environment tiles
+    test-floor.name = Test floor
+    light-test-floor.name = Light test floor
+    dark-test-floor.name = Dark test floor
+    solid-floor.name = Solid floor
+    solid-floor1.name = Solid floor (type 1)
+    solid-floor2.name = Solid floor (type 2)
+    solid-floor3.name = Solid floor (type 3)
+    solid-floor4.name = Solid floor (type 4)
 -cde
