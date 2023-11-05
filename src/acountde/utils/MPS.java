@@ -10,23 +10,21 @@ import org.jetbrains.annotations.NotNull;
 
 public class MPS {
     public static void init() {
-        Events.run(EventType.ClientLoadEvent.class, () -> {
-            ObjectSet<Planet> solarSystemsSet = new ObjectSet<>();
-            for(Planet planet : Vars.content.planets()) {
-                Planet solarSystem = planet.solarSystem;
-                if(solarSystem == null) continue;
-                solarSystemsSet.add(solarSystem);
+        ObjectSet<Planet> solarSystemsSet = new ObjectSet<>();
+        for(Planet planet : Vars.content.planets()) {
+            Planet solarSystem = planet.solarSystem;
+            if(solarSystem == null) continue;
+            solarSystemsSet.add(solarSystem);
+        }
+        Planet[] solarSystems = solarSystemsSet.toSeq().toArray(Planet.class);
+        Events.run(EventType.Trigger.update, () -> {
+            for(Planet planet : solarSystems){
+                updatePlanet(planet);
             }
-            Planet[] solarSystems = solarSystemsSet.toSeq().toArray(Planet.class);
-            Events.run(EventType.Trigger.update, () -> {
-                for(Planet planet : solarSystems){
-                    updatePlanet(planet);
-                }
-                PlanetParams state = Vars.ui.planet.state;
-                if(state.solarSystem != state.planet.solarSystem) {
-                    state.solarSystem = state.planet.solarSystem;
-                }
-            });
+            PlanetParams state = Vars.ui.planet.state;
+            if(state.solarSystem != state.planet.solarSystem) {
+                state.solarSystem = state.planet.solarSystem;
+            }
         });
     }
 

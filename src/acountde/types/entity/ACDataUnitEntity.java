@@ -6,11 +6,16 @@ import me13.core.units.XeonUnitEntity;
 import mindustry.game.Team;
 
 public class ACDataUnitEntity extends XeonUnitEntity {
+    public static final float SPAWN_CORDS = -666;
     public long SAVE_ID;
 
     @Override
     public void update() {
-        set(-32, -32);
+        set(SPAWN_CORDS, SPAWN_CORDS);
+    }
+
+    @Override
+    public void kill() {
     }
 
     @Override

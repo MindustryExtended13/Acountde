@@ -1,10 +1,14 @@
 package acountde.world.blocks.corruption;
 
 import acountde.world.blocks.ACBlock;
+import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
+import me13.core.units.Outliner;
 import mindustry.Vars;
+import mindustry.graphics.Drawf;
+import mindustry.world.Tile;
 
 public class CorruptionBlock extends ACBlock {
     public static final float MAX_PULSE = 126f;
@@ -39,6 +43,12 @@ public class CorruptionBlock extends ACBlock {
 
         public TextureRegion getRegion() {
             return block.region;
+        }
+
+        @Override
+        public void drawLight() {
+            super.drawLight();
+            Drawf.light(x, y, size * 12, Color.purple, 0.5f);
         }
 
         @Override

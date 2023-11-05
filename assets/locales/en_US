@@ -1,19 +1,64 @@
 --vardef B = acountde
 
 --cd %B%.
+    //setting categories
+    settings.category = Acountde config
+
+    //other
+    clear-name = Clear name
+    refresh = Reload
     you_in = You in:
---cde
+    rename = Rename
 
---cd prefixes.
-    developer = [purple] --- Developer content --- []
-    campaign = [red] --- Campaign content --- []
-    sandbox = [accent] --- Sandbox content --- []
-    corruption = [#403287] --- Corruption content --- []
---cde
+    //money
+    money = Money
+    export-coin = Export coins
+    import-coin = Import coins
 
---cd dimension.%B%-
-    overworld = Overworld
-    test = Test dimension
+    //other
+    --cd unlock.
+        blocks = Unlock all blocks
+        items = Unlock all items
+        liquids = Unlock all liquids
+        units = Unlock all units
+        all = Unlock all
+    --cde
+
+    --cd setting-split.
+        betamindy-main = Betamindy main
+        betamindy-asset = Betamindy content
+
+        main = Main config
+        tech = Tech config
+    --cde
+
+    --cd setting.
+        --cd betamindy-hack.
+            name = Betamindy hack [red](to apply all changes restart need)[]
+            description = Shows things that were hidden from the eyes of non-modders
+        --cde
+
+        --cd auto-bundle.
+            name = Auto bundle load [red](to apply changes restart need)[]
+            description = Auto loads bundles for content names that don`t have bundle
+        --cde
+
+        --cd anucoin-support.
+            name = Anucoin support [red](to apply changes restart need)[]
+            description = Makes block that transform coins into anucoin to work
+    --cde
+
+    --cd prefixes.
+        developer = [purple] --- Developer content --- []
+        campaign = [red] --- Campaign content --- []
+        sandbox = [accent] --- Sandbox content --- []
+        corruption = [#403287] --- Corruption content --- []
+    --cde
+
+    --cd dimension.%B%-
+        overworld = Overworld
+        test = Test dimension
+    --cde
 --cde
 
 --cd block.%B%-

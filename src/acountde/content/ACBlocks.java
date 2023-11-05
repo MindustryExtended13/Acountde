@@ -6,6 +6,14 @@ import acountde.world.blocks.MagicCube;
 import acountde.world.blocks.corruption.CorruptionBlock;
 import acountde.world.blocks.corruption.ShadowVein;
 import acountde.world.blocks.corruption.ToxicTower;
+import acountde.world.blocks.storage.CoinMoneyMoneyBlock;
+import acountde.world.blocks.storage.CoinNode;
+import acountde.world.blocks.storage.CoinSource;
+import acountde.world.blocks.storage.CoinVault;
+import arc.graphics.Color;
+import betamindy.content.MindyBlocks;
+import betamindy.graphics.MindyShaders;
+import mindustry.content.Blocks;
 import mindustry.content.Liquids;
 import mindustry.content.StatusEffects;
 import mindustry.graphics.CacheLayer;
@@ -14,6 +22,7 @@ import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.TreeBlock;
+import mindustry.world.meta.Attribute;
 import mindustry.world.meta.BuildVisibility;
 
 import static acountde.content.ACRegistry.*;
@@ -26,9 +35,9 @@ public class ACBlocks {
 
     //region environment
     @AddMark(MarkType.DEVELOPER)
-    public static Block testFloor, lightTestFloor, darkTestFloor,
+    public static Block testFloor, lightTestFloor, darkTestFloor, lava,
             solidFloor, solidFloor1, solidFloor2, solidFloor3, solidFloor4;
-    public static Block deepEnzor, enzor;
+    public static Block deepEnzor, enzor, milkyway;
     //end region
 
     //region structures (blocks)
@@ -37,7 +46,13 @@ public class ACBlocks {
 
     //region corruption
     @AddMark(MarkType.CORRUPTION)
-    public static Block toxicTower, shadowVein;
+    public static Block toxicTower, shadowVein, corruptedCore;
+    //end region
+
+    //region bank
+    public static Block coinNode, coinVault, tradingPost;
+    @AddMark(MarkType.SANDBOX)
+    public static Block coinSource;
     //end region
 
     public static void load() {
@@ -74,6 +89,29 @@ public class ACBlocks {
             albedo = 0.9f;
             supportsOverlay = true;
         }});
+
+        lava = register(new Floor("lava", 0) {{
+            drownTime = 230f;
+            status = StatusEffects.melting;
+            statusDuration = 240f;
+            speedMultiplier = 0.19f;
+            isLiquid = true;
+            cacheLayer = ACCacheLayer.lava;
+            attributes.set(Attribute.heat, 0.85f);
+
+            albedo = 0.9F;
+            emitLight = true;
+            lightRadius = 40f;
+            lightColor = Color.orange.cpy().a(0.38f);
+        }});
+
+        milkyway = register(new Floor("milkyway", 0) {{
+            cacheLayer = ACCacheLayer.milkyway;
+            placeableOn = false;
+            solid = true;
+            canShadow = false;
+            albedo = 0.2F;
+        }});
         //end region
 
         //region structures (blocks)
@@ -91,12 +129,46 @@ public class ACBlocks {
             requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.empty);
             pulseInterval = 15;
         }});
+
+        corruptedCore = register(new CorruptionBlock("corrupted-core") {{
+            requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.empty);
+            pulseInterval = 60;
+            size = 4;
+        }});
         //end region
 
         //region dimension
         magicCube = register(new MagicCube("magic-cube") {{
             requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.empty);
             size = 2;
+        }});
+        //end region
+
+        //region bank
+        coinNode = register(new CoinNode("coin-node") {{
+            requirements(Category.effect, ItemStack.empty);
+            initialMaximumCoin = 50000;
+            range = 31;
+            size = 5;
+        }});
+
+        coinVault = register(new CoinVault("coin-vault") {{
+            requirements(Category.effect, ItemStack.empty);
+            capacityIncrease = 10000;
+            size = 4;
+        }});
+
+        coinSource = register(new CoinSource("coin-source") {{
+            requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.empty);
+        }});
+
+        tradingPost = register(new CoinMoneyMoneyBlock("trading-post") {{
+            requirements(Category.effect, ItemStack.empty);
+            itemCapacity = Integer.MAX_VALUE;
+            blockType = TRADING_POST;
+            acceptsItems = true;
+            hasItems = true;
+            size = 3;
         }});
         //end region
     }

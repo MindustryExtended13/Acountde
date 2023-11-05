@@ -10,7 +10,6 @@ import arc.math.geom.Point2;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.gen.Building;
-import mindustry.gen.Tex;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

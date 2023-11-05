@@ -118,6 +118,7 @@ allprojects {
 dependencies {
     annotationProcessor project(":processor")
     compileOnly project(":anno")
+    compileOnly files('depedencies/sk7725betamindy.jar')
 }
 
 project(":processor") {
