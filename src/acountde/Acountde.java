@@ -89,11 +89,7 @@ public class Acountde extends Mod {
 
     @HandleEvent(EventType.FileTreeInitEvent.class)
     public static void loadShaders() {
-        Core.app.post(() -> {
-            ACShaders.init();
-            LOGGER.info("[accent]<FTE + POST (CACHELAYER)>[]");
-            //ACCacheLayer.init();
-        });
+        Core.app.post(ACShaders::init);
     }
 
     @HandleEvent(SaveWriteEvent.class)

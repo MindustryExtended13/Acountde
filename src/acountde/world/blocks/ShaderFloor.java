@@ -2,7 +2,6 @@ package acountde.world.blocks;
 
 import arc.graphics.g2d.Draw;
 import arc.graphics.gl.Shader;
-import mindustry.graphics.Layer;
 import mindustry.world.Tile;
 import mindustry.world.blocks.environment.Floor;
 
@@ -16,7 +15,7 @@ public class ShaderFloor extends Floor {
 
     @Override
     public void drawBase(Tile tile) {
-        Draw.draw(Layer.floor + 1, () -> {
+        Draw.draw(666, () -> {
             Draw.shader(shader);
             super.drawBase(tile);
             Draw.shader();
