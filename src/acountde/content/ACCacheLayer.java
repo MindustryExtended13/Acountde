@@ -26,6 +26,7 @@ public class ACCacheLayer {
         @Override
         public void begin() {
             renderer.blocks.floor.endc();
+            renderer.effectBuffer.begin();
             Core.graphics.clear(Color.clear);
             renderer.blocks.floor.beginc();
         }
@@ -33,6 +34,7 @@ public class ACCacheLayer {
         @Override
         public void end() {
             renderer.blocks.floor.endc();
+            renderer.effectBuffer.end();
             renderer.effectBuffer.blit(shader);
             renderer.blocks.floor.beginc();
         }
