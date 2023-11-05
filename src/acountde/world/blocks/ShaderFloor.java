@@ -5,6 +5,7 @@ import arc.graphics.gl.Shader;
 import mindustry.world.Tile;
 import mindustry.world.blocks.environment.Floor;
 
+@Deprecated
 public class ShaderFloor extends Floor {
     public Shader shader;
 

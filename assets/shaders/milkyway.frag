@@ -1,17 +1,21 @@
+#define HIGHP
+#define NSCALE 337.5
+#define CAMSCALE 27000.0
+
 uniform sampler2D u_texture;
 
+uniform vec2 u_campos;
+uniform vec2 u_resolution;
 uniform float u_time;
-uniform vec2 u_offset;
 
-varying vec4 v_color;
 varying vec2 v_texCoords;
 
-void main(){
-    vec4 color = texture2D(u_texture, v_texCoords.xy);
-    vec2 pos = gl_FragCoord.xy + .8 * u_offset;
+void main() {
+    vec2 c = v_texCoords.xy;
+    vec2 coords = vec2(c.x * u_resolution.x, c.y * u_resolution.y);
 
-    float t = clamp((sin(u_time * .01 + pos.x * .008 + pos.y * .004) + 1.) / 2., 0., 1.);
-    vec3 c = vec3(mix(0., 1., t), mix(.89, .39, t), mix(1., .85, t));
+    vec4 color = texture2D(u_texture, c);
+    color.rgb = texture2D(u_texture, coords/NSCALE + vec2(-0.1, -0.1) + u_campos / CAMSCALE).rgb;
 
-    gl_FragColor = vec4(color.rgb * c.rgb, color.a);
+    gl_FragColor = color;
 }

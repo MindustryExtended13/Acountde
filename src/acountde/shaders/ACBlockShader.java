@@ -7,6 +7,7 @@ import arc.scene.ui.layout.Scl;
 import arc.util.Time;
 import mindustry.Vars;
 
+@Deprecated
 public class ACBlockShader extends Shader {
     String textureName;
     Texture texture;

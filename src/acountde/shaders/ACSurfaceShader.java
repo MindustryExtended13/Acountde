@@ -6,7 +6,6 @@ import arc.graphics.gl.Shader;
 import arc.util.Time;
 import mindustry.Vars;
 
-@Deprecated
 public class ACSurfaceShader extends Shader {
     String textureName;
     Texture texture;

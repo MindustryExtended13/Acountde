@@ -91,7 +91,7 @@ public class ACBlocks {
             supportsOverlay = true;
         }});
 
-        lava = register(new ShaderFloor("lava") {{
+        lava = register(new Floor("lava") {{
             drownTime = 230f;
             status = StatusEffects.melting;
             statusDuration = 240f;
@@ -104,16 +104,16 @@ public class ACBlocks {
             emitLight = true;
             lightRadius = 40f;
             lightColor = Color.orange.cpy().a(0.38f);
-            shader = ACShaders.lava;
+            cacheLayer = ACCacheLayer.lava;
         }});
 
-        milkyway = register(new ShaderFloor("milkyway") {{
+        milkyway = register(new Floor("milkyway") {{
             placeableOn = false;
             variants = 0;
             solid = true;
             canShadow = false;
             albedo = 0.2F;
-            shader = ACShaders.milkyway;
+            cacheLayer = ACCacheLayer.milkyway;
         }});
         //end region
 

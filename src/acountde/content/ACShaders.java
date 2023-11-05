@@ -1,17 +1,17 @@
 package acountde.content;
 
 import acountde.anno.HandleEvent;
-import acountde.shaders.ACBlockShader;
+import acountde.shaders.ACSurfaceShader;
 import mindustry.Vars;
 import mindustry.game.EventType;
 
 public class ACShaders {
-    public static ACBlockShader lava, milkyway;
+    public static ACSurfaceShader lava, milkyway;
 
     public static void init() {
         if(!Vars.headless) {
-            lava = new ACBlockShader("lava", "lava_shader");
-            milkyway = new ACBlockShader("milkyway", "milkyway_shader");
+            lava = new ACSurfaceShader("lava", "lava_shader");
+            milkyway = new ACSurfaceShader("milkyway", "milkyway_shader");
         }
     }
 

@@ -89,7 +89,10 @@ public class Acountde extends Mod {
 
     @HandleEvent(EventType.FileTreeInitEvent.class)
     public static void loadShaders() {
-        Core.app.post(ACShaders::init);
+        Core.app.post(() -> {
+            ACShaders.init();
+            ACCacheLayer.init();
+        });
     }
 
     @HandleEvent(SaveWriteEvent.class)
