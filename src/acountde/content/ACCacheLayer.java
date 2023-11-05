@@ -3,21 +3,18 @@ package acountde.content;
 import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.gl.Shader;
-import mindustry.graphics.CacheLayer;
 import mindustry.graphics.CacheLayer.*;
 
 import static mindustry.Vars.renderer;
 
+@Deprecated
 public class ACCacheLayer {
     public static ShaderLayer lava, milkyway;
 
     public static void init() {
-        lava = new ModShaderLayer(ACShaders.lava);
-        milkyway = new ModShaderLayer(ACShaders.milkyway);
-        CacheLayer.add(lava);
-        CacheLayer.add(milkyway);
     }
 
+    @Deprecated
     public static class ModShaderLayer extends ShaderLayer {
         public ModShaderLayer(Shader shader) {
             super(shader);

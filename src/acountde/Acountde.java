@@ -92,7 +92,7 @@ public class Acountde extends Mod {
         Core.app.post(() -> {
             ACShaders.init();
             LOGGER.info("[accent]<FTE + POST (CACHELAYER)>[]");
-            ACCacheLayer.init();
+            //ACCacheLayer.init();
         });
     }
 

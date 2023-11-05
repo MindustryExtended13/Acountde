@@ -3,6 +3,7 @@ package acountde.content;
 import acountde.anno.AddMark;
 import acountde.anno.MarkType;
 import acountde.world.blocks.MagicCube;
+import acountde.world.blocks.ShaderFloor;
 import acountde.world.blocks.corruption.CorruptionBlock;
 import acountde.world.blocks.corruption.ShadowVein;
 import acountde.world.blocks.corruption.ToxicTower;
@@ -90,27 +91,29 @@ public class ACBlocks {
             supportsOverlay = true;
         }});
 
-        lava = register(new Floor("lava", 0) {{
+        lava = register(new ShaderFloor("lava") {{
             drownTime = 230f;
             status = StatusEffects.melting;
             statusDuration = 240f;
             speedMultiplier = 0.19f;
             isLiquid = true;
-            cacheLayer = ACCacheLayer.lava;
             attributes.set(Attribute.heat, 0.85f);
+            variants = 0;
 
             albedo = 0.9F;
             emitLight = true;
             lightRadius = 40f;
             lightColor = Color.orange.cpy().a(0.38f);
+            shader = ACShaders.lava;
         }});
 
-        milkyway = register(new Floor("milkyway", 0) {{
-            cacheLayer = ACCacheLayer.milkyway;
+        milkyway = register(new ShaderFloor("milkyway") {{
             placeableOn = false;
+            variants = 0;
             solid = true;
             canShadow = false;
             albedo = 0.2F;
+            shader = ACShaders.milkyway;
         }});
         //end region
 
