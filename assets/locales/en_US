@@ -1,5 +1,10 @@
 --vardef B = acountde
 
+--cd dimension.%B%-
+    overworld = Overworld
+    test = Test dimension
+--cde
+
 --cd %B%.
     //setting categories
     settings.category = Acountde config
@@ -46,6 +51,7 @@
         --cd anucoin-support.
             name = Anucoin support [red](to apply changes restart need)[]
             description = Makes block that transform coins into anucoin to work
+        --cde
     --cde
 
     --cd prefixes.
@@ -53,11 +59,6 @@
         campaign = [red] --- Campaign content --- []
         sandbox = [accent] --- Sandbox content --- []
         corruption = [#403287] --- Corruption content --- []
-    --cde
-
-    --cd dimension.%B%-
-        overworld = Overworld
-        test = Test dimension
     --cde
 --cde
 

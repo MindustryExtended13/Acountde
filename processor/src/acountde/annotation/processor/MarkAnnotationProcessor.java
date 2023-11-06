@@ -31,8 +31,8 @@ public class MarkAnnotationProcessor extends AcountdeProcessor {
                     for(MarkType type : types) {
                         String b = "\"prefixes." + type.name().toLowerCase() + '"';
                         method.addStatement("tmp = $L.$L", fieldName, var);
-                        method.addStatement("$L.$L = $T.bundle.get($L) + (tmp == null ? \"\" : '\\n' + tmp)",
-                                fieldName, var, tname(Core.class), b);
+                        method.addStatement("$L.$L = $T.get($L) + (tmp == null ? \"\" : '\\n' + tmp)",
+                                fieldName, var, tname("acountde.Acountde"), b);
                     }
                 }
             } else {
