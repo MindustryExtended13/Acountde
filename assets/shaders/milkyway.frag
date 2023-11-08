@@ -3,7 +3,7 @@
 #define CAMSCALE 27000.0
 
 uniform sampler2D u_texture;
-uniform sampler2D u_tex;
+uniform sampler2D u_tex0;
 
 uniform vec2 u_campos;
 uniform vec2 u_ccampos;
@@ -17,7 +17,7 @@ void main() {
     vec2 coords = vec2(c.x * u_resolution.x, c.y * u_resolution.y);
 
     vec4 color = texture2D(u_texture, c);
-    color.rgb = texture2D(u_tex, coords/NSCALE + vec2(-0.1, -0.1) + u_ccampos / CAMSCALE).rgb;
+    color.rgb = texture2D(u_tex0, coords/NSCALE + vec2(-0.1, -0.1) + u_ccampos / CAMSCALE).rgb;
 
     gl_FragColor = color;
 }

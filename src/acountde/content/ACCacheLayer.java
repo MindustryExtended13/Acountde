@@ -11,13 +11,14 @@ import static acountde.Acountde.LOGGER;
 import static mindustry.Vars.renderer;
 
 public class ACCacheLayer {
-    public static ShaderLayer lava, milkyway;
+    public static ShaderLayer lava, milkyway, shimmer;
 
     public static void init() {
         LOGGER.info("[accent]<FTE + POST (CACHELAYER)>[]");
         milkyway = new ModShaderLayer(ACShaders.milkyway);
+        shimmer = new ModShaderLayer(ACShaders.shimmer);
         lava = new ModShaderLayer(ACShaders.lava);
-        CacheLayer.add(milkyway, lava);
+        CacheLayer.add(milkyway, shimmer, lava);
     }
 
     public static class ModShaderLayer extends ShaderLayer {

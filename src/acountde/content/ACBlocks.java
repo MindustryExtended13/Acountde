@@ -3,7 +3,6 @@ package acountde.content;
 import acountde.anno.AddMark;
 import acountde.anno.MarkType;
 import acountde.world.blocks.MagicCube;
-import acountde.world.blocks.ShaderFloor;
 import acountde.world.blocks.corruption.CorruptionBlock;
 import acountde.world.blocks.corruption.ShadowVein;
 import acountde.world.blocks.corruption.ToxicTower;
@@ -12,9 +11,7 @@ import acountde.world.blocks.storage.CoinNode;
 import acountde.world.blocks.storage.CoinSource;
 import acountde.world.blocks.storage.CoinVault;
 import arc.graphics.Color;
-import betamindy.content.MindyBlocks;
-import betamindy.graphics.MindyShaders;
-import mindustry.content.Blocks;
+import betamindy.content.MindyLiquids;
 import mindustry.content.Liquids;
 import mindustry.content.StatusEffects;
 import mindustry.graphics.CacheLayer;
@@ -36,9 +33,9 @@ public class ACBlocks {
 
     //region environment
     @AddMark(MarkType.DEVELOPER)
-    public static Block testFloor, lightTestFloor, darkTestFloor, lava,
+    public static Block testFloor, lightTestFloor, darkTestFloor,
             solidFloor, solidFloor1, solidFloor2, solidFloor3, solidFloor4;
-    public static Block deepEnzor, enzor, milkyway;
+    public static Block deepEnzor, enzor, milkyway, lava, shimmer;
     //end region
 
     //region structures (blocks)
@@ -114,6 +111,23 @@ public class ACBlocks {
             canShadow = false;
             albedo = 0.2F;
             cacheLayer = ACCacheLayer.milkyway;
+        }});
+
+        shimmer = register(new Floor("shimmer") {{
+            drownTime = 230f;
+            speedMultiplier = 0.19f;
+            isLiquid = true;
+            statusDuration = 60f * 60f * 6;
+            status = ACStatusEffects.shimmerBuff;
+            attributes.set(Attribute.heat, 0.85f);
+            liquidDrop = ACLiquids.shimmer;
+            variants = 0;
+
+            albedo = 0.9F;
+            emitLight = true;
+            lightRadius = 40f;
+            lightColor = Color.pink.cpy().a(0.38f);
+            cacheLayer = ACCacheLayer.shimmer;
         }});
         //end region
 

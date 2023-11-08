@@ -7,22 +7,28 @@ import acountde.dimension.AcountdeServer;
 import acountde.gen.EventsSetup;
 import acountde.gen.MarksSetup;
 import acountde.invoker.BetaMindyInvoker;
+import acountde.types.AnimatedLiquid;
 import acountde.ui.AcountdeDialogInit;
 import acountde.ui.AcountdeSettings;
-import acountde.utils.ACUtil;
-import acountde.utils.CostLib;
-import acountde.utils.MPS;
+import acountde.utils.*;
+import acountde.utils.FxUpdater.FxBox;
+
 import arc.Core;
+import arc.Events;
 import arc.graphics.Color;
 import arc.graphics.g2d.TextureRegion;
 import arc.scene.style.TextureRegionDrawable;
+import arc.struct.Seq;
 import arc.util.Strings;
+
 import me13.core.bundle2.Bundle2;
 import me13.core.logger.ILogger;
 import me13.core.logger.LoggerFactory;
+
 import mindustry.Vars;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType;
+import mindustry.game.Team;
 import mindustry.mod.Mod;
 import mindustry.mod.Mods;
 import mindustry.game.EventType.*;
@@ -30,11 +36,15 @@ import mindustry.type.Item;
 import mindustry.type.Liquid;
 import mindustry.type.UnitType;
 import mindustry.ui.dialogs.BaseDialog;
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import static acountde.utils.Shimmer.onMutantChain;
+import static mindustry.content.UnitTypes.*;
 
 public class Acountde extends Mod {
     public static final String MOD_GITHUB = "https://github.com/MindustryExtended13/Acountde";
@@ -45,6 +55,10 @@ public class Acountde extends Mod {
     public static AcountdeServer server;
 
     public static boolean isBetaMindyInstalled = false;
+
+    public static boolean doingUpdate() {
+        return Vars.world != null && Vars.world.tiles != null && !Vars.state.isPaused();
+    }
 
     public static String get(String name) {
         return Core.bundle.get(MOD_ID + "." + name);
@@ -107,6 +121,19 @@ public class Acountde extends Mod {
         MarksSetup.init();
         AcountdeDialogInit.load();
 
+        FxUpdater.map.put(ACBlocks.shimmer.asFloor(), new FxBox(ACFx.shimmerShimming) {{
+            spawnChange = 0.0005f;
+        }});
+
+        Seq<AnimatedLiquid> liquidSeq = ACRegistry
+                .content()
+                .select(c -> c instanceof AnimatedLiquid)
+                .map(content -> (AnimatedLiquid) content);
+
+        Events.run(Trigger.update, () -> {
+            liquidSeq.each(AnimatedLiquid::update);
+        });
+
         String tmp;
         for(UnlockableContent content : ACRegistry.content()) {
             tmp = content.name + "-preview";
@@ -152,6 +179,36 @@ public class Acountde extends Mod {
             binder.log("\t- {} = {}$", slag.localizedName, CostLib.calculateCost(slag));
         }
 
+        ACLiquids.shimmer.canStayOn.addAll(Vars.content.liquids());
+
+        onMutantChain(reign, scepter, fortress, mace, dagger);
+        onMutantChain(corvus, vela, quasar, pulsar, nova);
+        onMutantChain(toxopid, arkyid, spiroct, atrax, crawler);
+        onMutantChain(eclipse, antumbra, zenith, horizon, flare);
+        onMutantChain(oct, quad, mega, poly, mono);
+        onMutantChain(navanax, aegires, cyerce, oxynoe, retusa);
+        onMutantChain(omura, sei, bryde, minke, risso);
+        onMutantChain(conquer, vanquish, precept, locus, stell);
+        onMutantChain(collaris, tecta, anthicus, cleroi, merui);
+        onMutantChain(disrupt, quell, obviate, avert, elude);
+        onMutantChain(gamma, beta, alpha);
+        onMutantChain(emanate, incite, evoke);
+        onMutantChain(latum, renale);
+
+        onMutantChain(dagger, nova, crawler, dagger);
+        onMutantChain(stell, merui,  stell);
+        onMutantChain(alpha, evoke, alpha);
+        onMutantChain(flare, mono, flare);
+        onMutantChain(retusa, risso, retusa);
+
+        Shimmer.on(box -> {
+            if(box.unitChanged() || box.unit.type != renale) {
+                return;
+            }
+
+            box.unit.team = Team.all[box.unit.team.id + 1 % Team.all.length];
+        });
+
         /*
         BaseDialog dialog = new BaseDialog("label-test");
         dialog.addCloseButton();
@@ -173,6 +230,10 @@ public class Acountde extends Mod {
 
         LOGGER.info("Loading server");
         server = new AcountdeServer();
+
+        LOGGER.info("Loading fx init");
+        Core.app.addListener(new FxUpdater());
+        Core.app.addListener(new Shimmer());
     }
 
     @Override
@@ -185,6 +246,8 @@ public class Acountde extends Mod {
             BetaMindyInvoker.load();
         }
 
+        ACStats.load();
+        ACLiquids.load();
         ACStatusEffects.load();
         ACUnits.load();
         ACBlocks.load();

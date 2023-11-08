@@ -12,6 +12,7 @@
     //other
     clear-name = Clear name
     refresh = Reload
+    out = Output
     you_in = You in:
     rename = Rename
 

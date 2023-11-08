@@ -1,16 +1,54 @@
 package acountde.utils;
 
 import arc.func.Boolf;
+import arc.graphics.g2d.Draw;
+import arc.math.Angles;
+import arc.math.Mathf;
+import arc.math.geom.Position;
 import arc.math.geom.Rect;
+import arc.math.geom.Vec2;
 import arc.struct.IntSeq;
 import mindustry.Vars;
 import mindustry.gen.Building;
 import mindustry.gen.Hitboxc;
+import mindustry.gen.Unit;
+import mindustry.graphics.Layer;
 import mindustry.mod.Mods.LoadedMod;
+import mindustry.type.UnitType;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class ACUtil {
+    @Contract(pure = true)
+    public static float layerOf(@NotNull Unit unit) {
+        return unit.elevation > 0.5f ? (unit.type.lowAltitude ? Layer.flyingUnitLow : Layer.flyingUnit) :
+                unit.type.groundLayer + Mathf.clamp(unit.hitSize / 4000f, 0, 0.01f);
+    }
+
+    public static @NotNull Unit setType(@NotNull Unit unit, UnitType type) {
+        if(unit.type != type) {
+            boolean setPlayerUnit = Vars.player.unit() == unit;
+            float rotation = unit.rotation;
+            unit.remove();
+            Unit out = type.spawn(unit);
+            out.rotation = rotation;
+            if(setPlayerUnit) {
+                Vars.player.unit(out);
+            }
+            return out;
+        } else {
+            return unit;
+        }
+    }
+
+    @Contract("_, _, _ -> new")
+    public static @NotNull Vec2 relative(@NotNull Unit unit, float x, float y) {
+        return new Vec2(
+                unit.x + Angles.trnsx(unit.rotation - 90, x, y),
+                unit.y + Angles.trnsy(unit.rotation - 90, x, y)
+        );
+    }
+
     @Contract(pure = true)
     public static float det(float a, float b, float c, float d) {
         return a * d - b * c;
