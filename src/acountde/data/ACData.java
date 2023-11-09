@@ -45,6 +45,10 @@ public class ACData {
         return GET_SAVE_ID() != -1;
     }
 
+    public static ACDataUnitEntity getEntity() {
+        return (ACDataUnitEntity) Groups.unit.find(u -> u instanceof ACDataUnitEntity);
+    }
+
     public static long GET_SAVE_ID() {
         long[] out = new long[] {-1};
         Groups.unit.each(unit -> {

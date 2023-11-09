@@ -18,4 +18,9 @@ public class Dimension {
         localizedName = Core.bundle.get("dimension." + Vars.content.transformName(name));
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return localizedName;
+    }
 }

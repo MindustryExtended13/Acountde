@@ -4,10 +4,12 @@ import acountde.anno.HandleEvent;
 import acountde.content.*;
 import acountde.data.ACData;
 import acountde.dimension.AcountdeServer;
+import acountde.dimension.UniverseUpdater;
 import acountde.gen.EventsSetup;
 import acountde.gen.MarksSetup;
 import acountde.invoker.BetaMindyInvoker;
 import acountde.types.AnimatedLiquid;
+import acountde.ui.ACDM;
 import acountde.ui.AcountdeDialogInit;
 import acountde.ui.AcountdeSettings;
 import acountde.utils.*;
@@ -88,7 +90,8 @@ public class Acountde extends Mod {
     public static void fail(Throwable throwable) {
         String trace = toString(throwable);
         BaseDialog dialog = new BaseDialog("ERROR");
-        dialog.add(trace).color(Color.red);
+        dialog.cont.add(trace).color(Color.red);
+        dialog.addCloseButton();
         dialog.show();
         LOGGER.err(trace);
     }
@@ -97,7 +100,7 @@ public class Acountde extends Mod {
     public static void saveLoadEvent() {
         if(!server.disableBetaConfiguration) {
             server.restart();
-            server.read();
+            server.tryLoad();
         }
     }
 
@@ -111,7 +114,9 @@ public class Acountde extends Mod {
 
     @HandleEvent(SaveWriteEvent.class)
     public static void saveWriterEvent() {
-        server.save();
+        if(!server.disableAlphaConfiguration) {
+            server.trySave();
+        }
     }
 
     @HandleEvent(ClientLoadEvent.class)
@@ -179,6 +184,7 @@ public class Acountde extends Mod {
             binder.log("\t- {} = {}$", slag.localizedName, CostLib.calculateCost(slag));
         }
 
+        ACDM.rebuild();
         ACLiquids.shimmer.canStayOn.addAll(Vars.content.liquids());
 
         onMutantChain(reign, scepter, fortress, mace, dagger);
@@ -209,6 +215,9 @@ public class Acountde extends Mod {
             box.unit.team = Team.all[box.unit.team.id + 1 % Team.all.length];
         });
 
+        Core.app.addListener(new UniverseUpdater());
+        Core.app.addListener(server);
+
         /*
         BaseDialog dialog = new BaseDialog("label-test");
         dialog.addCloseButton();
@@ -227,6 +236,9 @@ public class Acountde extends Mod {
     @Override
     public void init() {
         LOGGER.info("Mod init");
+        if(Vars.headless) {
+            throw new IllegalStateException("MOD DON`T SUPPORT MULTIPLAYER");
+        }
 
         LOGGER.info("Loading server");
         server = new AcountdeServer();

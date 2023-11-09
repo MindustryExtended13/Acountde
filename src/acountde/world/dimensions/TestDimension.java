@@ -11,10 +11,10 @@ import org.jetbrains.annotations.NotNull;
 public class TestDimension extends Dimension {
     @Override
     public void generateLevel(@NotNull Level level) {
-        level.tiles.eachTile(tile -> {
+        level._0.tiles.eachTile(tile -> {
             tile.setFloor((Floor) Blocks.salt);
         });
-        level.tiles.get(17, 17).setNet(Blocks.coreShard, Vars.player.team(), 0);
+        level._0.tiles.get(17, 17).setNet(Blocks.coreShard, Vars.player.team(), 0);
     }
 
     @Override

@@ -9,6 +9,7 @@ import arc.math.geom.Rect;
 import arc.math.geom.Vec2;
 import arc.struct.IntSeq;
 import mindustry.Vars;
+import mindustry.core.World;
 import mindustry.gen.Building;
 import mindustry.gen.Hitboxc;
 import mindustry.gen.Unit;
@@ -87,8 +88,16 @@ public class ACUtil {
     }
 
     public static void selectBuild() {
+        selectBuild(Vars.world);
+    }
+
+    public static void selectBuild(@NotNull World world) {
         ACTmp.seq1b.clear();
-        Vars.world.tiles.eachTile(t -> {
+        world.tiles.eachTile(t -> {
+            if(t == null) {
+                return;
+            }
+
             Building building = t.build;
             if(building != null && !ACTmp.seq1b.contains(building)) {
                 ACTmp.seq1b.add(building);
@@ -97,7 +106,11 @@ public class ACUtil {
     }
 
     public static void selectTiles(Boolf<Building> b) {
-        selectBuild();
+        selectTiles(Vars.world, b);
+    }
+
+    public static void selectTiles(World world, Boolf<Building> b) {
+        selectBuild(world);
         ACTmp.switchSeq();
         ACTmp.seq1b.clear();
         ACTmp.seq2b.each(bu -> {

@@ -13,9 +13,15 @@ public class MagicCube extends ACBlock {
         super(name);
         destructible = true;
         configurable = true;
+        update = true;
     }
 
     public class MagicCubeBuild extends ACBuild {
+        @Override
+        public void updateTile() {
+            //Acountde.LOGGER.info("{}", this);
+        }
+
         @Override
         public void buildConfiguration(@NotNull Table table) {
             table.table(t -> {

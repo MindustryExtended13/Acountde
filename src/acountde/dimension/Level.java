@@ -2,8 +2,11 @@ package acountde.dimension;
 
 import acountde.Acountde;
 import acountde.types.entity.ACDataUnitEntity;
+import acountde.utils.ACTmp;
+import acountde.utils.ACUtil;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.content.Blocks;
 import mindustry.core.World;
 import mindustry.gen.*;
 import mindustry.world.Tiles;
@@ -12,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Level {
     public Seq<Entityc> subAll = new Seq<>();
-    public Tiles tiles = new Tiles(0, 0);
+    public World _0 = new World();
     public Dimension instance;
     boolean loaded = false;
 
@@ -24,29 +27,32 @@ public class Level {
             }
         });
 
-        tiles = new Tiles(world.width(), world.height());
+        _0.tiles = new Tiles(world.width(), world.height());
         world.tiles.each((x, y) -> {
-            tiles.set(x, y, world.tiles.get(x, y));
+            _0.tiles.set(x, y, world.tiles.get(x, y));
         });
     }
 
     public void move(@NotNull World world) {
-        if(Vars.player.unit() != null) {
-            Call.unitDespawn(Vars.player.unit());
-        }
         Acountde.server.resetTeamData();
-        world.loadGenerator(tiles.width, tiles.height, t -> {
-            t.each((x, y) -> t.set(x, y, this.tiles.get(x, y)));
+        world.loadGenerator(_0.tiles.width, _0.tiles.height, t -> {
+            t.each((x, y) -> t.set(x, y, _0.tiles.get(x, y)));
         });
         float t = Vars.tilesize;
         float f = Vars.finalWorldBounds;
-        Groups.resize(-f, -f, tiles.width * t + f/2, tiles.height * t + f/2);
+        Groups.resize(-f, -f, _0.tiles.width * t + f/2, _0.tiles.height * t + f/2);
         Groups.all.each(e -> {
             if(needInclude(e)) {
                 e.remove();
             }
         });
         subAll.each(Entityc::add);
+        ACUtil.selectBuild();
+        for(Building b : ACTmp.seq1b) {
+            if(!subAll.contains(b)) {
+                b.add();
+            }
+        }
         checkGeneration();
     }
 
