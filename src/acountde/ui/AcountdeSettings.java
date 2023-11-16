@@ -1,20 +1,19 @@
 package acountde.ui;
 
-import acountde.Acountde;
 import acountde.invoker.BetaMindyInvoker;
+
+import acountde.utils.CostLib;
+import arc.func.Boolc;
 import arc.func.Cons;
 import arc.scene.ui.ScrollPane;
 import arc.scene.ui.layout.Cell;
-import arc.scene.ui.layout.Table;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Reflect;
+
+import arc.util.Scaling;
 import mindustry.Vars;
-import mindustry.content.Blocks;
-import mindustry.content.Items;
-import mindustry.content.Liquids;
-import mindustry.content.UnitTypes;
+import mindustry.ctype.UnlockableContent;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
@@ -23,15 +22,16 @@ import mindustry.type.Liquid;
 import mindustry.type.UnitType;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.ui.dialogs.SettingsMenuDialog;
+import mindustry.ui.fragments.MenuFragment;
 import mindustry.world.Block;
 
 import static arc.Core.*;
-import static arc.Core.bundle;
 import static mindustry.Vars.*;
 import static acountde.Acountde.*;
 
 public class AcountdeSettings {
     public static final ObjectMap<String, Cons<AcountdeSettingTable>> categories = new ObjectMap<>();
+    public static MenuFragment.MenuButton button;
     public static AcountdeSettingTable content;
     public static String current = null;
     public static int index = -1;
@@ -51,7 +51,7 @@ public class AcountdeSettings {
     }
 
     public static void load() {
-        ui.menufrag.addButton(get("settings.category"), drawable("setting-icon"), () -> {
+        button = new MenuFragment.MenuButton(get("settings.category"), Icon.settings, () -> {
             Seq<String> keys = categories.keys().toSeq();
             index = keys.indexOf("main");
             BaseDialog dialog = new BaseDialog("invalid");
@@ -67,7 +67,7 @@ public class AcountdeSettings {
                         btn.setDisabled(index <= 0);
                     });
                     buttons.table(info -> {
-                        info.setBackground(Tex.button);
+                        info.setBackground(Tex.pane);
                         info.add("").update(l -> l.setText(current));
                     }).size(mobile ? 150 : 600, 48).pad(6);
                     buttons.button(Icon.right, () -> {
@@ -101,42 +101,60 @@ public class AcountdeSettings {
     }
 
     static {
+        Boolc ignoredBool = (ignored) -> {};
+
         addCategory("main", (t) -> {
             t.category("main");
-            t.checkPref("auto-bundle", Icon.folder.getRegion(), false, (ignored) -> {});
+            var _tmp = Icon.save.getRegion();
+            t.checkPref("acountde-auto-bundle", Icon.folder.getRegion(), false, ignoredBool);
+            t.checkPref("acountde-autosave", _tmp, false, ignoredBool);
+            t.sliderPrefI("acountde-save-interval", _tmp, 600, 9600, 60, 4800, (ignored) -> {
+                server.autosaveCounter = server.saveInterval();
+            });
             t.category("tech");
             t.table(b -> {
+                var content = Vars.content;
                 b.defaults().size(200, 60).pad(3);
                 Runnable r = () -> {if(mobile) {b.row();}};
-                b.button(get("unlock.blocks"), to(Blocks.copperWall.uiIcon), () -> {
-                    Vars.content.blocks().each(Block::quietUnlock);
+                b.button(get("unlock.blocks"), () -> {
+                    content.blocks().each(Block::quietUnlock);
                 });
                 r.run();
-                b.button(get("unlock.items"), to(Items.copper.uiIcon), () -> {
-                    Vars.content.items().each(Item::quietUnlock);
+                b.button(get("unlock.items"), () -> {
+                    content.items().each(Item::quietUnlock);
                 });
                 r.run();
-                b.button(get("unlock.liquids"), to(Liquids.ozone.uiIcon), () -> {
-                    Vars.content.liquids().each(Liquid::quietUnlock);
+                b.button(get("unlock.liquids"), () -> {
+                    content.liquids().each(Liquid::quietUnlock);
                 });
                 r.run();
-                b.button(get("unlock.units"), to(UnitTypes.dagger.uiIcon), () -> {
-                    Vars.content.units().each(UnitType::quietUnlock);
+                b.button(get("unlock.units"), () -> {
+                    content.units().each(UnitType::quietUnlock);
                 });
                 r.run();
-                b.button(get("unlock.all"), to(Items.lead.uiIcon), () -> {
-                    Vars.content.liquids().each(Liquid::quietUnlock);
-                    Vars.content.items().each(Item::quietUnlock);
+                b.button(get("unlock.all"), () -> {
+                    content.each(c -> {
+                        if(c instanceof UnlockableContent cont) {
+                            cont.quietUnlock();
+                        }
+                    });
                 });
             });
         });
 
         addCategory("betamindy", (t) -> {
+            boolean disabled = !isBetaMindyInstalled;
             t.category("betamindy-main");
-            t.checkPref("betamindy-hack", region("frog"), false, BetaMindyInvoker::setHack)
-                    .disabled(!isBetaMindyInstalled);
-            t.checkPref("anucoin-support", region("anucoin-outline"), true, (ignored) -> {})
-                    .disabled(!isBetaMindyInstalled);
+            t.checkPref("acountde-betamindy-hack", region("frog"), false, BetaMindyInvoker::setHack)
+                    .disabled(disabled);
+            t.checkPref("acountde-anucoin-support", region("anucoin-outline"), true, ignoredBool)
+                    .disabled(disabled);
+            t.sliderPrefI("acountde-anucoin-prize", region("math"), 0, 11, 1, 5, (info, ignored) -> {
+                info.image().scaling(Scaling.fit).size(32).update(i -> {
+                    i.setDrawable(CostLib.getImage());
+                });
+            }, (ignored) -> {
+            });
             t.category("betamindy-asset");
         });
     }

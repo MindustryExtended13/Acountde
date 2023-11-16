@@ -38,29 +38,39 @@
         tech = Tech config
     --cde
 
-    --cd setting.
-        --cd betamindy-hack.
-            name = Betamindy hack [red](to apply all changes restart need)[]
-            description = Shows things that were hidden from the eyes of non-modders
-        --cde
-
-        --cd auto-bundle.
-            name = Auto bundle load [red](to apply changes restart need)[]
-            description = Auto loads bundles for content names that don`t have bundle
-        --cde
-
-        --cd anucoin-support.
-            name = Anucoin support [red](to apply changes restart need)[]
-            description = Makes block that transform coins into anucoin to work
-        --cde
-    --cde
-
     --cd prefixes.
         developer = [purple] --- Developer content --- []
         campaign = [red] --- Campaign content --- []
         sandbox = [accent] --- Sandbox content --- []
         corruption = [#403287] --- Corruption content --- []
     --cde
+--cde
+
+--cd setting.%B%-
+   --cd betamindy-hack.
+        name = Betamindy hack [red](to apply all changes restart need)[]
+        description = Shows things that were hidden from the eyes of non-modders
+   --cde
+
+   --cd auto-bundle.
+        name = Auto bundle load [red](to apply changes restart need)[]
+        description = Auto loads bundles for content names that don`t have bundle
+   --cde
+
+   --cd anucoin-support.
+        name = Anucoin support [red](to apply changes restart need)[]
+        description = Makes block that transform coins into anucoin to work
+   --cde
+
+   --cd autosave.
+        name = Use %B% version of autosave
+        description = If enabled new autosave system will save all dimensions&not recommended to use
+   --cde
+
+   --cd save-interval.
+        name = Acountde autosave interval
+        description = If %B% autosave enabled, every n ticks will be called %B% save
+   --cde
 --cde
 
 --cd block.%B%-

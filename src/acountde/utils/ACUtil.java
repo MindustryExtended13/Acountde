@@ -6,6 +6,7 @@ import arc.math.Angles;
 import arc.math.Mathf;
 import arc.math.geom.*;
 import arc.struct.IntSeq;
+import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.core.World;
 import mindustry.gen.Building;
@@ -18,6 +19,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class ACUtil {
+    public static final float E = 2.71828182846f;
+
     @Contract(pure = true)
     public static float layerOf(@NotNull Unit unit) {
         return unit.elevation > 0.5f ? (unit.type.lowAltitude ? Layer.flyingUnitLow : Layer.flyingUnit) :
@@ -83,6 +86,19 @@ public class ACUtil {
         int scalar = Math.max(Math.abs(self.tileX() - other.tileX()), Math.abs(self.tileY() - other.tileY()));
         //Acountde.LOGGER.info("Scalar value of {} is {}", other, scalar);
         return scalar < radius;
+    }
+
+    public static<T> void addNonLast(int index, Seq<T> seq, T element) {
+        Seq<T> n = new Seq<>();
+        for(int i = 0; i < index; i++) {
+            n.add(seq.get(i));
+        }
+        n.add(element);
+        for(int i = index + 1; i < seq.size; i++) {
+            n.add(seq.get(i));
+        }
+        seq.clear();
+        seq.addAll(n);
     }
 
     public static void selectBuild() {

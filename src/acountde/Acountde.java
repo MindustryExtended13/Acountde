@@ -9,9 +9,7 @@ import acountde.gen.EventsSetup;
 import acountde.gen.MarksSetup;
 import acountde.invoker.BetaMindyInvoker;
 import acountde.types.AnimatedLiquid;
-import acountde.ui.ACDM;
-import acountde.ui.AcountdeDialogInit;
-import acountde.ui.AcountdeSettings;
+import acountde.ui.*;
 import acountde.utils.*;
 import acountde.utils.FxUpdater.FxBox;
 
@@ -147,7 +145,7 @@ public class Acountde extends Mod {
             }
         }
 
-        if(Core.settings.getBool("auto-bundle")) {
+        if(Core.settings.getBool("acountde-auto-bundle")) {
             Vars.content.each(c -> {
                 if(c instanceof UnlockableContent content) {
                     String x = content.getContentType() + ".";
@@ -170,6 +168,7 @@ public class Acountde extends Mod {
         }
         
         AcountdeSettings.load();
+        AcountdeMenu.load();
         var binder = LOGGER.atInfo();
         binder.log("units:");
         for(UnitType type : Vars.content.units()) {
@@ -217,6 +216,7 @@ public class Acountde extends Mod {
 
         Core.app.addListener(new UniverseUpdater());
         Core.app.addListener(server);
+        GlobalStyle.enable();
 
         /*
         BaseDialog dialog = new BaseDialog("label-test");
