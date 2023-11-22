@@ -89,17 +89,20 @@ public class ACBlock extends Block {
 
         public PositionAngleResult getPositionRotationFor(@NotNull Tile tile) {
             PositionAngleResult result = new PositionAngleResult();
-            float x = tile.drawx() - this.x;
-            float y = tile.drawy() - this.y;
-            float abs_x = Math.abs(x);
-            float abs_y = Math.abs(y);
+            float abs_x = Math.abs(tile.drawx() - this.x);
+            float abs_y = Math.abs(tile.drawy() - this.y);
+            BlockAngle angle = getRotationFor(tile);
 
-            if(abs_x == abs_y) {
+            if(angle.isBroken()) {
+                result.angle = -2;
+            } else if(!angle.isBinary()) {
+                result.angle = angle.values[0];
+            } else if(abs_x == abs_y) {
                 result.angle = -1;
             } else if(abs_x > abs_y) {
-                result.angle = x > 0 ? 0 : 2;
+                result.angle = angle.values[0];
             } else {
-                result.angle = y > 0 ? 1 : 3;
+                result.angle = angle.values[1];
             }
 
             return result;

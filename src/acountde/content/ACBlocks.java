@@ -2,6 +2,7 @@ package acountde.content;
 
 import acountde.anno.AddMark;
 import acountde.anno.MarkType;
+import acountde.world.ACBuildVisibility;
 import acountde.world.blocks.ACBlock;
 import acountde.world.blocks.MagicCube;
 import acountde.world.blocks.corruption.CorruptionBlock;
@@ -199,7 +200,7 @@ public class ACBlocks {
         for(int i = 0; i < 16; i++) {
             final int j = i + 1;
             debuggerBlocks[i] = register(new ACBlock("debug-block-" + j) {{
-                requirements(Category.effect, BuildVisibility.hidden, ItemStack.empty);
+                requirements(Category.effect, ACBuildVisibility.schizophrenia, ItemStack.empty);
                 debugBinary = true;
                 theorem2 = true;
                 size = j;

@@ -56,6 +56,10 @@ public class Acountde extends Mod {
 
     public static boolean isBetaMindyInstalled = false;
 
+    public static boolean schizophrenia() {
+        return Core.settings.getBool("acountde-schizophrenia");
+    }
+
     public static boolean doingUpdate() {
         return Vars.world != null && Vars.world.tiles != null && !Vars.state.isPaused();
     }

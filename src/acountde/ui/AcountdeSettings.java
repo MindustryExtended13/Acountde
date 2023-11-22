@@ -107,6 +107,7 @@ public class AcountdeSettings {
             t.category("main");
             var _tmp = Icon.save.getRegion();
             t.checkPref("acountde-auto-bundle", Icon.folder.getRegion(), false, ignoredBool);
+            t.checkPref("acountde-schizophrenia", Icon.planet.getRegion(), false, ignoredBool);
             t.checkPref("acountde-autosave", _tmp, false, ignoredBool);
             t.sliderPrefI("acountde-save-interval", _tmp, 600, 9600, 60, 4800, (ignored) -> {
                 server.autosaveCounter = server.saveInterval();

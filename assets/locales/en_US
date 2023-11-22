@@ -71,6 +71,11 @@
         name = Acountde autosave interval
         description = If %B% autosave enabled, every n ticks will be called %B% save
    --cde
+
+   --cd schizophrenia.
+        name = Schizophrenia mode
+        description = Mindustry turns into schizophrenia
+   --cde
 --cde
 
 --cd block.%B%-
