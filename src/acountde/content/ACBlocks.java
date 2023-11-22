@@ -2,6 +2,7 @@ package acountde.content;
 
 import acountde.anno.AddMark;
 import acountde.anno.MarkType;
+import acountde.world.blocks.ACBlock;
 import acountde.world.blocks.MagicCube;
 import acountde.world.blocks.corruption.CorruptionBlock;
 import acountde.world.blocks.corruption.ShadowVein;
@@ -51,6 +52,10 @@ public class ACBlocks {
     public static Block coinNode, coinVault, tradingPost;
     @AddMark(MarkType.SANDBOX)
     public static Block coinSource;
+    //end region
+
+    //region test
+    public static Block[] debuggerBlocks;
     //end region
 
     public static void load() {
@@ -187,6 +192,19 @@ public class ACBlocks {
             hasItems = true;
             size = 3;
         }});
+        //end region
+
+        //region test
+        debuggerBlocks = new Block[16];
+        for(int i = 0; i < 16; i++) {
+            final int j = i + 1;
+            debuggerBlocks[i] = register(new ACBlock("debug-block-" + j) {{
+                requirements(Category.effect, BuildVisibility.hidden, ItemStack.empty);
+                debugBinary = true;
+                theorem2 = true;
+                size = j;
+            }});
+        }
         //end region
     }
 }
